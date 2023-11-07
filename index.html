@@ -1,0 +1,300 @@
+<html>
+<style>
+body {
+	background-color: #3c3c3c;
+  background-image: url("https://images.neopets.com/backgrounds/meerca_day3.gif");
+	font-family: times;
+	font-size: 14px;
+	color: #000;
+	text-align: center;
+	margin-top: 50px;
+	margin-left: 150px;
+	margin-right: 150px;
+	margin-bottom: 50px;
+	padding: 3px;
+}
+.c1 {
+	background-color: #ffffff;
+	padding: 5px;
+	width: 70%;
+	margin: 0 auto;
+}
+h1{
+  color: #164863;
+  font-style: italic;
+  font-size: 60px;
+  margin: 5px;
+}
+h2{
+  color: #9BBEC8;
+  font-style: italic;
+  font-size: 20px;
+  margin: 5px;
+}
+b{
+  color: #363062;
+}
+i{
+  color: #435585;
+}
+a{
+  color: #818FB4;
+}
+a:hover{
+  color: #B6D0E2;
+}
+</style>
+
+<body>
+<form>
+<div class="c1">
+
+<h1>PAH GENERATOR</h1>
+
+<h2>how it works</h2>
+<p>
+<li>Paste listing into first box</li>
+<li>Check any of the boxes if there's a custom (FFQ/PP/NP)</li>
+<li>Hit generate</li>
+<li>Paste into pot page</li>
+<li>Rinse and repeat for the rest of the listing board</li>
+<br>
+What should pop up is a bunch of code formatted for Neopets' pet page to
+<br>show a picture of the pet, the name, color/species, and any notes
+<br>or what the custom is, if that's chosen. Just paste it in and it's there!
+<br><br>
+Going one at a time makes it a bit easier to edit if someone decides to change something last minute,
+<br>and the minimal code to put in (hopefully!) makes it easy to do some tweaks here and there for the pot page
+<br>for someone who's on mobile/doesn't know much about pet page coding.
+</p>
+
+<h2>enter listing here</h2>
+<textarea id="inputw1" style="height: 200px; width: 300px; font-size:10pt;" type="text" placeholder="Type something here"></textarea>
+
+<p></p>
+<b>For customs:</b>
+<br>Check the <i>first box</i> if the <i>first listing</i> is the custom.
+<br>Check the <i>second box</i> if the <i>second listing</i> is the custom.
+<br>If it's a <i>single custom listing</i>, check the <i>first box</i>.
+<br>
+<label for="myCheck"><i><b>1st listing is a custom</b></i>:</label><input type="checkbox" id="checkboxOne">
+<br>
+<label for="myCheck"><i><b>2nd listing is a custom</b></i>:</label><input type="checkbox" id="checkboxTwo">
+<p></p>
+<input type="button" value="Generate listing!" onclick="pushListing()">
+<p></p>
+<h2>listing code here</h2>
+<textarea id="list" style="height: 150px; width: 300px; font-size:10pt;" type="text"></textarea>
+<p></p>
+<h2>pah resources</h2>
+<p>
+Looking for PAH resources? Check out these links below!
+</p><li>PAH rules: <a href="https://www.neopets.com/~krouth">/~Krouth</a></li>
+<li>PAH how-to and etiquette: <a href="https://www.neopets.com/~Frelp">/~Frelp</a></li>
+<li>PAH variations: <a href="https://www.neopets.com/~Breadin">/~Breadin</a></li>
+<li>PAH resources: <a href="https://www.neopets.com/~Bydz">/~Bydz</a></li>
+</p>
+</div>
+</form>
+<script>
+
+// button??
+// https://stackoverflow.com/questions/49579088/add-item-to-list-on-button-click-js
+
+// fcns:
+// .split() -> string into array
+function pushListing(list){
+    var w1 = document.getElementById('inputw1').value;
+
+    // split listing into one whole array
+    var w1_str = w1.toString().split(/\r?\n|\r|\n/g).filter(x => !/^\s*$/.test(x))
+
+		//console.log(w1_str)
+
+    if (w1_str.length == 4) { // two listings
+
+      var first_listing = w1_str[1].split(" ") // split the first listing
+      var second_listing = w1_str[2].split(" ") // split the second listing
+
+      // grab the username
+      var username = w1_str[3]
+
+      // turn the listings into urls
+      var fl_url = listingToURL(first_listing)
+      var sl_url = listingToURL(second_listing)
+
+      // final formatting function -> returns all the formatting as one giant string array
+      var final_format = formatToCSS_2(username, fl_url, sl_url, first_listing, second_listing).join("")
+
+      // uncheck checkbox
+      document.getElementById("checkboxOne").checked = false;
+      document.getElementById("checkboxTwo").checked = false;
+
+      // code box
+      var textbox = document.getElementById('list');
+      textbox.value = final_format;
+
+    }
+    else if(w1_str.length == 3){ // one listing
+
+      var first_listing = w1_str[1].split(" ") // split the first listing
+
+      // grab the username
+      var username = w1_str[2]
+
+      // turn the listings into urls
+      var fl_url = listingToURL(first_listing)
+
+      // final formatting function -> returns all the formatting as one giant string array
+      var final_format = formatToCSS_1(username, fl_url, first_listing).join("")
+
+      // uncheck checkbox
+      document.getElementById("checkboxOne").checked = false;
+
+      // code box
+      var textbox = document.getElementById('list');
+      textbox.value = final_format;
+
+    }
+    else { // probably an end line, remove it
+      console.log("it is not good")
+    }
+}
+
+// take listing and turn it into the formatting we have for url
+// url for pictures
+// <a href="/petlookup.phtml?pet=PETNAME"><img src="//pets.neopets.com/cpn/PETNAME/1/2.png"></a>
+function listingToURL(url){
+
+  // an array that holds both urls
+  var final_urls = []
+
+  // for the link
+  var url1 = '/petlookup.phtml?pet=PETNAME'
+  url1 = url1.replace('PETNAME', url[0])
+  final_urls.push(url1)
+
+  // for the img
+  var url2 = '//pets.neopets.com/cpn/PETNAME/1/2.png'
+  url2 = url2.replace('PETNAME', url[0])
+  final_urls.push(url2)
+
+  return final_urls
+
+}
+
+// for two listings
+function formatToCSS_2(username, fl_url, sl_url, fl, sl){
+
+  // final array
+  var result = []
+
+  // if the box is checked, check if one of them
+  var first = document.getElementById("checkboxOne");
+  var second = document.getElementById("checkboxTwo");
+
+  var flu1, slu1;
+
+  // first, second, or both
+  if (first.checked == true && second.checked == false){ // only first
+    flu1 = "<img src=\"https://images.neopets.com/backgrounds/meerca_day2.gif\" style=\"width: 150px; height: 150px;\">"
+    slu1 = "<a href=\"" + sl_url[0] + "\"><img src=\"" + sl_url[1] + "\"></a>"
+  }
+  else if (first.checked == false && second.checked == true){ // only second
+    flu1 = "<a href=\"" + fl_url[0] + "\"><img src=\"" + fl_url[1] + "\"></a>"
+    slu1 = "<img src=\"https://images.neopets.com/backgrounds/meerca_day2.gif\" style=\"width: 150px; height: 150px;\">"
+  }
+  else if (first.checked == true && second.checked == true){ // both
+    flu1 = "<img src=\"https://images.neopets.com/backgrounds/meerca_day2.gif\" style=\"width: 150px; height: 150px;\">"
+    slu1 = "<img src=\"https://images.neopets.com/backgrounds/meerca_day2.gif\" style=\"width: 150px; height: 150px;\">"
+  }
+  else { // neither is checked, both are not customs
+    flu1 = "<a href=\"" + fl_url[0] + "\"><img src=\"" + fl_url[1] + "\"></a>"
+    slu1 = "<a href=\"" + sl_url[0] + "\"><img src=\"" + sl_url[1] + "\"></a>"
+  }
+
+  // add first url + a break
+  result.push(flu1)
+  result.push("<br>")
+
+  // add first listing + notes
+  // since it's an array i have to do it this wonky way ugh idk im bald or whatever
+  let fl_str = ""
+  for(let i = 0; i < fl.length; i++){
+    fl_str += fl[i] + " "
+  }
+  result.push(fl_str)
+  result.push("<br><br>")
+
+  // add second url + a break
+  result.push(slu1)
+  result.push("<br>")
+
+  // add second listing + notes
+  // since it's an array i have to do it this wonky way ugh idk im bald or whatever
+  let sl_str = ""
+  for(let i = 0; i < sl.length; i++){
+    sl_str += sl[i] + " "
+  }
+  result.push(sl_str)
+
+  // add username to the bottom
+  let username_css = "<h2>" + username + "</h2>"
+  result.push(username_css)
+
+  // adding the border
+  let border = "<hr style=\"width: 90%;\">"
+  result.push(border)
+
+  return result
+
+}
+
+// for two listings
+function formatToCSS_1(username, fl_url, fl){
+
+  // final array
+  var result = []
+
+  var flu1;
+
+  var first = document.getElementById("checkboxOne");
+
+  // check if listing is just a custom
+  if(first.checked == true){
+    flu1 = "<img src=\"https://images.neopets.com/backgrounds/meerca_day2.gif\" style=\"width: 150px; height: 150px;\">"
+  }
+  else {
+    flu1 = "<a href=\"" + fl_url[0] + "\"><img src=\"" + fl_url[1] + "\"></a>"
+  }
+
+  // add first url + a break
+  result.push(flu1)
+  result.push("<br>")
+
+  // add first listing + notes
+  // since it's an array i have to do it this wonky way ugh idk im bald or whatever
+  let fl_str = ""
+  for(let i = 0; i < fl.length; i++){
+    fl_str += fl[i] + " "
+  }
+  result.push(fl_str)
+
+  // add username to the bottom
+  let username_css = "<h2>" + username + "</h2>"
+  result.push(username_css)
+
+  // adding the border
+  let border = "<hr style=\"width: 90%;\">"
+  result.push(border)
+
+  return result
+
+}
+
+
+
+</script>
+
+</body>
+</html>
