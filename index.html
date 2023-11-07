@@ -53,23 +53,27 @@ a:hover{
 
 <h2>how it works</h2>
 <p>
-<li>Paste listing into first box</li>
+<li>Paste <i>one</i> listing into first box</li>
 <li>Check any of the boxes if there's a custom (FFQ/PP/NP)</li>
 <li>Hit generate</li>
 <li>Paste into pot page</li>
-<li>Rinse and repeat for the rest of the listing board</li>
+<li>Rinse and repeat for the other listings on the board</li>
 <br>
-What should pop up is a bunch of code formatted for Neopets' pet page to
-<br>show a picture of the pet, the name, color/species, and any notes
-<br>or what the custom is, if that's chosen. Just paste it in and it's there!
+What should pop up is a bunch of code that formats a <i>single user's listing</i> for Neo pet pages.
+<br>It'll include: pictures, names, color/species, and notes.
 <br><br>
-Going one at a time makes it a bit easier to edit if someone decides to change something last minute,
-<br>and the minimal code to put in (hopefully!) makes it easy to do some tweaks here and there for the pot page
-<br>for someone who's on mobile/doesn't know much about pet page coding.
+Though you're going one listing at a time with this generator, the hope is that it makes it easier to make any last minute edits,
+<br>and the minimal code to put in (hopefully!) makes it easy for someone who's on mobile/doesn't know much about pet page coding.
 </p>
 
 <h2>enter listing here</h2>
-<textarea id="inputw1" style="height: 200px; width: 300px; font-size:10pt;" type="text" placeholder="Type something here"></textarea>
+<textarea id="inputw1" style="height: 200px; width: 300px; font-size:10pt;" type="text" placeholder="Listing:
+
+Petname - Color species
+Petname - Color species
+
+@username
+"></textarea>
 
 <p></p>
 <b>For customs:</b>
@@ -84,7 +88,7 @@ Going one at a time makes it a bit easier to edit if someone decides to change s
 <input type="button" value="Generate listing!" onclick="pushListing()">
 <p></p>
 <h2>listing code here</h2>
-<textarea id="list" style="height: 150px; width: 300px; font-size:10pt;" type="text"></textarea>
+<textarea id="list" style="height: 150px; width: 300px; font-size:10pt;" type="text" placeholder="Code will be generated here"></textarea>
 <p></p>
 <h2>pah resources</h2>
 <p>
