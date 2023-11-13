@@ -90,6 +90,19 @@ Petname - Color species
 <h2>listing code here</h2>
 <textarea id="list" style="height: 150px; width: 300px; font-size:10pt;" type="text" placeholder="Code will be generated here"></textarea>
 <p></p>
+<h2>listing previews</h2>
+<img src="https://images.neopets.com/backgrounds/meerca_day2.gif" style="width: 150px; height: 150px;" id="imgOne">
+<br>
+<div id="pi1">
+Petname #1
+</div>
+<br>
+<img src="https://images.neopets.com/backgrounds/meerca_day2.gif" style="width: 150px; height: 150px;" id="imgTwo">
+<br>
+<div id="pi2">
+Petname #2
+</div>
+<p></p>
 <h2>pah resources</h2>
 <p>
 Looking for PAH resources? Check out these links below!
@@ -122,6 +135,15 @@ function pushListing(list){
 
     if (w1_str.length == 4) { // two listings
 
+			// refresh images
+			if (document.getElementById("imgOne").src != "https://images.neopets.com/backgrounds/meerca_day2.gif"){
+				document.getElementById("imgOne").src = "https://images.neopets.com/backgrounds/meerca_day2.gif";
+			}
+
+			if (document.getElementById("imgTwo").src != "https://images.neopets.com/backgrounds/meerca_day2.gif"){
+				document.getElementById("imgTwo").src = "https://images.neopets.com/backgrounds/meerca_day2.gif";
+			}
+
       var first_listing = w1_str[1].split(" ") // split the first listing
       var second_listing = w1_str[2].split(" ") // split the second listing
 
@@ -143,8 +165,42 @@ function pushListing(list){
       var textbox = document.getElementById('list');
       textbox.value = final_format;
 
+			// for image previews
+			var img_url1 = 'https://pets.neopets.com/cpn/PETNAME/1/2.png'
+			img_url1 = img_url1.replace('PETNAME', first_listing[0])
+
+			var img_url2 = 'https://pets.neopets.com/cpn/PETNAME/1/2.png'
+			img_url2 = img_url2.replace('PETNAME', second_listing[0])
+
+			console.log(img_url1, img_url2)
+
+			if (document.getElementById("imgOne").src == "https://images.neopets.com/backgrounds/meerca_day2.gif"){
+				document.getElementById("imgOne").src = img_url1;
+			} else {
+					document.getElementById("imgOne").src = "https://images.neopets.com/backgrounds/meerca_day2.gif";
+			}
+
+			if (document.getElementById("imgTwo").src == "https://images.neopets.com/backgrounds/meerca_day2.gif"){
+				document.getElementById("imgTwo").src = img_url2;
+			} else {
+					document.getElementById("imgTwo").src = "https://images.neopets.com/backgrounds/meerca_day2.gif";
+			}
+
+			// for name previews
+			document.getElementById("pi1").innerHTML = first_listing[0];
+			document.getElementById("pi2").innerHTML = second_listing[0];
+
     }
     else if(w1_str.length == 3){ // one listing
+
+			// refresh images
+			if (document.getElementById("imgOne").src != "https://images.neopets.com/backgrounds/meerca_day2.gif"){
+				document.getElementById("imgOne").src = "https://images.neopets.com/backgrounds/meerca_day2.gif";
+			}
+
+			if (document.getElementById("imgTwo").src != "https://images.neopets.com/backgrounds/meerca_day2.gif"){
+				document.getElementById("imgTwo").src = "https://images.neopets.com/backgrounds/meerca_day2.gif";
+			}
 
       var first_listing = w1_str[1].split(" ") // split the first listing
 
@@ -160,9 +216,24 @@ function pushListing(list){
       // uncheck checkbox
       document.getElementById("checkboxOne").checked = false;
 
+			// for image previews
+			var img_url1 = 'https://pets.neopets.com/cpn/PETNAME/1/2.png'
+			img_url1 = img_url1.replace('PETNAME', first_listing[0])
+
+			console.log(img_url1)
+
+			if (document.getElementById("imgOne").src == "https://images.neopets.com/backgrounds/meerca_day2.gif"){
+				document.getElementById("imgOne").src = img_url1;
+			} else {
+					document.getElementById("imgOne").src = "https://images.neopets.com/backgrounds/meerca_day2.gif";
+			}
+
       // code box
       var textbox = document.getElementById('list');
       textbox.value = final_format;
+
+			// for name previews
+			document.getElementById("pi1").innerHTML = first_listing[0];
 
     }
     else { // probably an end line, remove it
