@@ -144,6 +144,10 @@ function pushListing(list){
 				document.getElementById("imgTwo").src = "https://images.neopets.com/backgrounds/meerca_day2.gif";
 			}
 
+			// refresh listing names
+			document.getElementById("pi1").innerHTML = "Petname #1";
+			document.getElementById("pi2").innerHTML = "Petname #2";
+
       var first_listing = w1_str[1].split(" ") // split the first listing
       var second_listing = w1_str[2].split(" ") // split the second listing
 
@@ -171,8 +175,6 @@ function pushListing(list){
 
 			var img_url2 = 'https://pets.neopets.com/cpn/PETNAME/1/2.png'
 			img_url2 = img_url2.replace('PETNAME', second_listing[0])
-
-			console.log(img_url1, img_url2)
 
 			if (document.getElementById("imgOne").src == "https://images.neopets.com/backgrounds/meerca_day2.gif"){
 				document.getElementById("imgOne").src = img_url1;
@@ -202,6 +204,10 @@ function pushListing(list){
 				document.getElementById("imgTwo").src = "https://images.neopets.com/backgrounds/meerca_day2.gif";
 			}
 
+			// refresh listing names
+			document.getElementById("pi1").innerHTML = "Petname #1";
+			document.getElementById("pi2").innerHTML = "Petname #2";
+
       var first_listing = w1_str[1].split(" ") // split the first listing
 
       // grab the username
@@ -220,7 +226,6 @@ function pushListing(list){
 			var img_url1 = 'https://pets.neopets.com/cpn/PETNAME/1/2.png'
 			img_url1 = img_url1.replace('PETNAME', first_listing[0])
 
-			console.log(img_url1)
 
 			if (document.getElementById("imgOne").src == "https://images.neopets.com/backgrounds/meerca_day2.gif"){
 				document.getElementById("imgOne").src = img_url1;
