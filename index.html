@@ -254,6 +254,14 @@ function listingToURL(url){
   // an array that holds both urls
   var final_urls = []
 
+	// remove any weird charas from the pet name so it doesn't mess up the link business
+	// this is awful BUT basically if the end thing is not a letter and it's not a number,
+	// remove it
+	if(/\d/.test(url[0].charAt(url[0].length-1)) == false && /[a-z]/i.test(url[0].charAt(url[0].length-1)) == false){
+		url[0] = url[0].slice(0, -1)
+	}
+
+
   // for the link
   var url1 = '/petlookup.phtml?pet=PETNAME'
   url1 = url1.replace('PETNAME', url[0])
